@@ -4,6 +4,16 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import { SearchResults } from '../SearchResults/SearchResults';
 import { Playlist } from '../Playlist/Playlist';
 
+
+
+const playlistName = 'Jean-list';
+
+const playlistTracks = {
+  name: 'Triller',
+  artist: 'Michael Jackson',
+  album: 'Screan',
+  id: '3',
+}
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +23,13 @@ class App extends React.Component {
       album: '',
       id: '',
     };
+    this.addTrack = this.addTrack.bind(this);
+  }
+
+  addTrack(track){
+    if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
+      return;
+    }
   }
 
   render() {
@@ -24,8 +41,8 @@ class App extends React.Component {
         <div className='App'>
           <SearchBar />
           <div className='App-playlist'>
-            <SearchResults searchResults={this.state.searchResults} />
-            <Playlist />
+            <SearchResults searchResults={this.state.searchResults}  onAdd={this.addTrack}/>
+            <Playlist {this.state.playlistName} {this.state.playlistTracks}/>
           </div>
         </div>
       </div>
