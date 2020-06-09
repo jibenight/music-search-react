@@ -4,12 +4,6 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import { SearchResults } from '../SearchResults/SearchResults';
 import { Playlist } from '../Playlist/Playlist';
 
-const playlistTracks = {
-  name: 'Triller',
-  artist: 'Michael Jackson',
-  album: 'Screan',
-  id: '3',
-};
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -58,19 +52,30 @@ class App extends React.Component {
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
   }
 
   addTrack(track) {
-    if (
-      this.state.playlistTracks.find((savedTrack) => savedTrack.id === track.id)
-    ) {
+    let tracks = this.state.playlistTracks;
+    if (tracks.find((savedTrack) => savedTrack.id === track.id)) {
       return;
+    }
+    tracks.push(track);
+    this.setState({ playlistTracks: tracks });
+  }
+
+  removeTrack(track) {
+    let tracks = this.state.playlistTracks;
+    if (tracks.find((removedTrack) => removedTrack.id === track.id)) {
+      const indexTrack = tracks.indexOf(track.id);
+      tracks.splice(indexTrack, 1);
+      this.setState({ playlistTracks: tracks });
     }
   }
 
-  removeTrack(track) {}
-
-  updatePlaylistName(list) {}
+  updatePlaylistName(updateListe) {
+    let updateListe = this.state.playlistName;
+  }
 
   render() {
     return (
@@ -89,6 +94,7 @@ class App extends React.Component {
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
               onRemove={this.state.removeTrack}
+              onNameChange={this.state.updatePlaylistName}
             />
           </div>
         </div>
