@@ -19,7 +19,9 @@ export class Track extends React.Component {
         <button className='Track-action' onClick={this.addTrack}>
           +
         </button>
-  
+      );
+    }
+  }
   addTrack() {
     this.props.onAdd(this.props.track);
   }
