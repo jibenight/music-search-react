@@ -19,13 +19,13 @@ class App extends React.Component {
           name: 'Triller',
           artist: 'Michael Jackson',
           album: 'Screan',
-          id: '3',
+          id: '2',
         },
         {
           name: 'Las vegas',
           artist: 'Johny Haliday',
           album: 'pions',
-          id: '4',
+          id: '3',
         },
       ],
       playlistName: 'Jean-list',
@@ -34,13 +34,13 @@ class App extends React.Component {
           name: 'playlist1',
           artist: 'playlistartist1',
           album: 'playlistalbum1',
-          id: '5',
+          id: '4',
         },
         {
           name: 'playlist2',
           artist: 'playlistartist2',
           album: 'playlistalbum2',
-          id: '6',
+          id: '5',
         },
         {
           name: 'playlist3',
@@ -59,7 +59,7 @@ class App extends React.Component {
 
   addTrack(track) {
     let tracks = this.state.playlistTracks;
-    if (tracks.find(savedTrack => savedTrack.id === track.id)) {
+    if (tracks.find((savedTrack) => savedTrack.id === track.id)) {
       return;
     }
     tracks.push(track);
@@ -68,19 +68,16 @@ class App extends React.Component {
 
   removeTrack(track) {
     let tracks = this.state.playlistTracks;
-    if (tracks.find(removedTrack => removedTrack.id === track.id)) {
-      const indexTrack = tracks.indexOf(track.id);
-      tracks.splice(indexTrack, 1);
-      this.setState({ playlistTracks: tracks });
-    }
+    tracks = tracks.filter((currentTrack) => currentTrack.id !== track.id);
+    this.setState({ playlistTracks: tracks });
   }
 
-  updatePlaylistName(updateListe) {
-    updateListe = this.state.playlistName;
+  updatePlaylistName(name) {
+    this.setState({ playlistName: name });
   }
 
   savePlaylist() {
-    let uri = [];
+    const trackUris = this.state.playlistTracks.map((track) => track.uri);
   }
 
   search(term) {
@@ -94,7 +91,7 @@ class App extends React.Component {
           Ja<span className='highlight'>mmm</span>ing
         </h1>
         <div className='App'>
-          <SearchBar />
+          <SearchBar onSearch={this.search} />
           <div className='App-playlist'>
             <SearchResults
               searchResults={this.state.searchResults}
@@ -103,8 +100,9 @@ class App extends React.Component {
             <Playlist
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
-              onRemove={this.state.removeTrack}
-              onNameChange={this.state.updatePlaylistName}
+              onRemove={this.removeTrack}
+              onNameChange={this.updatePlaylistName}
+              onSave={this.savePlaylist}
             />
           </div>
         </div>
