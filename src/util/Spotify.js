@@ -1,5 +1,6 @@
 const clienId = '86b48da2759146e0925b12937fd49eb3';
 const redirectUri = 'https://jeanmming.surge.sh';
+//const redirectUri = 'http://localhost:3000/';
 let accessToken;
 
 const Spotify = {
